@@ -1,0 +1,54 @@
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body" style="margin: 20% 0% 20% 0%;">
+      <h1 class="text-center mb-3">
+        <em class="fas fa-user-plus"></em> Register
+      </h1>
+      <form action="/register" method="POST">
+        <div class="form-group">
+          <label for="name">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-control <%= errors.username ? ' is-invalid' : ''%>"
+            value="<%= typeof username != 'undefined' ? username : '' %>"
+          />
+          <% if (errors.username) { %>
+          <div class="invalid-feedback"><%= errors.username %></div>
+          <% } %>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control <%= errors.password ? ' is-invalid' : ''%>"
+            value="<%= typeof password != 'undefined' ? password : '' %>"
+          />
+          <% if (errors.password) { %>
+          <div class="invalid-feedback"><%= errors.password %></div>
+          <% } %>
+        </div>
+        <div class="form-group">
+          <label for="password2">Confirm Password</label>
+          <input
+            type="password"
+            id="password2"
+            name="password2"
+            class="form-control <%= errors.password2 ? ' is-invalid' : ''%>"
+            value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+          />
+          <% if (errors.password2) { %>
+          <div class="invalid-feedback"><%= errors.password2 %></div>
+          <% } %>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">
+          Register
+        </button>
+      </form>
+      <p class="lead mt-4">Have An Account? <a href="/login">Login</a></p>
+    </div>
+  </div>
+</div>

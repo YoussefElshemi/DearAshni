@@ -1,0 +1,70 @@
+<% include ./blocks/header %>
+<div class="jumbotron mt-4 py-0">
+  <div id="main" class="mt-4">
+    <% include ./partials/messages %>
+  </div>
+  <div class="row mt-4">
+    <div class="col">
+      <div style="display: inline-block;" class="p-1 h1 text-primary text-center mx-auto">
+        <em class="fa fa-calendar bg-primary text-white rounded p-2"></em>
+        Calendar
+      </div>
+    </div>
+  </div>
+	<div class= "mb-5" id="calendar"></div>
+</div>
+
+<div class="modal fade" id="add-event" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				Add Event
+			</div>
+			<form id="add-event-form">
+				<input type="hidden" id="start" name="start">
+				<input type="hidden" id="end" name="end">
+				<input type="hidden" id="allDay" name="allDay">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="name">Event Name</label>
+						<input type="text" class="form-control" id="title" name="title">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="calendar.unselect()">Cancel</button>
+					<button type="submit" id="add-event-submit" style="float: right;" class="btn btn-primary btn-ok">Add</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="delete-event" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				Confirm Deletion
+			</div>
+			<div class="modal-body">
+				Are you sure you want to delete this event?
+				This action is <strong>irreversible</strong>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$(prevEvent).css('background-color', '#333333'); document.getElementById('id').value = '';">Cancel</button>
+				<form id="delete-event-form">
+					<input type="hidden" name="id" id="id">
+					<button type="submit" id="delete-event-submit" style="float: right;" class="btn btn-primary btn-ok">Delete</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+.fc-highlight {
+  background: #555555 !important;
+	opacity: 0.5 !important;
+}
+</style>
+
+<script src="static/js/calendar.js"></script>

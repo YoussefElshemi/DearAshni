@@ -1,0 +1,61 @@
+<% include ./blocks/header %>
+<div class="jumbotron mt-4 py-0">
+  <div class="mt-4">
+    <% include ./partials/messages %>
+  </div>
+  <div class="row mt-4">
+    <div class="col">
+        <div style="display: inline-block;" class="p-1 h1 text-primary text-center mx-auto">
+            <em class="fa fa-book bg-primary text-white rounded p-2"></em>
+            Diary
+        </div>
+        <% if (pages.length) { %>
+          <a href="/diary/new" style="float: right;" class="btn btn-primary mt-3">New</a>
+          <% } %>
+    </div>
+</div>
+  <% if (pages.length) { %>
+  <div class="row">
+  <% for (const page of pages) { %>
+    <div class="col-sm-3">
+      <div class="card mb-4">
+        <div class="card-header bg-transparent border-bottom-0" style="height: 30px">
+          <h5 class="card-title" style="display: inline-block;">
+            <u><%= page.createdAt.toLocaleDateString() %></u>
+          </h5>
+          <form method="POST" action="/diary/delete" style="display: block; float: right;">
+            <input type="hidden" name="id" value="<%= page.id %>">
+            <button type="submit" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </form>
+        </div>
+        <div class="card-body">
+          <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%= page.text %></p>
+          <a href="/diary/<%= page.id %>" class="btn btn-primary">Open Page</a>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+
+  <div>
+    <ul class="pagination justify-content-center">
+      <li class="page-item<%= currentPage == 1 ? ' disabled' : '' %>">
+        <a class="page-link" href="?id=<%= currentPage - 1 %>">&laquo;</a>
+      </li>
+      <% for (let i = 0; i < paginated.length + 1; i++) { %>
+      <li class="page-item<%= currentPage - 1 == i ? ' active' : '' %>">
+        <a class="page-link" href="?id=<%= i + 1 %>"><%= i + 1 %></a>
+      </li>
+      <% } %>
+      <li class="page-item<%= currentPage == paginated.length + 1 ? ' disabled' : '' %>">
+        <a class="page-link" href="?id=<%= currentPage + 1 %>">&raquo;</a>
+      </li>
+    </ul>
+  </div>
+
+  <% } else { %>
+  <h4 class="mt-4">You haven't started your diary yet, press <a href="/diary/new">here</a> to create a page!</h4>
+  <% } %>
+</div>

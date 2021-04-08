@@ -1,0 +1,55 @@
+<% include ./blocks/header %>
+<div class="jumbotron mt-5">
+  <% include ./partials/messages %>
+  <button style="float: right;" class="btn btn-primary" data-toggle="modal" data-target="#confirm-delete">Delete</button>
+  <form method="POST">
+    <button type="submit" style="float: right;" class="btn btn-primary">Save</button>
+    <div class="form-group" style="display: inline-block;">
+      <input type="text" class="form-control-plaintext" value="Date: <%= page.createdAt.toLocaleDateString() %>" readonly>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="weather" name="weather" value="<%= page.weather %>" placeholder="Describe today's weather">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="mood" name="mood" value="<%= page.mood %>" placeholder="Describe your mood">
+    </div>
+    <div class="form-group">
+      <textarea class="form-control" id="text" name="text" rows="10" spellcheck="false" placeholder="Speak your thoughts"><%= page.text %></textarea>
+    </div>
+  </form>
+
+  <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          Confirm Deletion
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this page?
+          This action is <strong>irreversible</strong>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <form method="POST" action="/diary/delete">
+            <input type="hidden" name="id" value="<%= page.id %>">
+            <button type="submit" style="float: right;" class="btn btn-primary btn-ok">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-xs-center">
+    <ul class="pagination justify-content-center">
+      <li class="page-item<%= !previous ? ' disabled' : ''%>">
+        <a class="page-link" href="<%= previous %>">&laquo;</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="/diary?id=1">Home</a>
+      </li>
+      <li class="page-item<%= !next ? ' disabled' : ''%>">
+        <a class="page-link" href="<%= next %>">&raquo;</a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<% include ./blocks/header %>
+<div class="jumbotron mt-4 py-0">
+  <div class="mt-4">
+    <% include ./partials/messages %>
+  </div>
+  <div class="row mt-4">
+    <div class="col">
+      <div style="display: inline-block;" class="p-1 h1 text-primary text-center mx-auto">
+        <em class="fa fa-check bg-primary text-white rounded p-2"></em>
+        To Do List
+      </div>
+    </div>
+  </div>
+
+  <form method="POST" action="/tasks/new">
+    <div class="row m-1 p-3">
+      <div class="col col-11 mx-auto">
+        <div class="row bg-white rounded shadow-sm p-2 add-todo-wrapper align-items-center justify-content-center">
+            <div class="col">
+              <input class="form-control form-control-lg border-0 add-todo-input bg-transparent rounded" type="text" placeholder="Add new..." name="task" id="task">
+            </div>
+            <div class="col-auto px-0 mx-0 mr-2">
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <% for (const task of tasks) { %>
+    <div class="row px-3 align-items-center todo-item rounded">
+      <div class="col-auto m-1 p-0 d-flex align-items-center">
+        <h2 class="m-0 p-0">
+        <form method="POST" action="/tasks/:id">
+          <input type="hidden" name="id" value="<%= task.id %>">
+          <% if (!task.complete) { %>
+          <input type="hidden" name="status" value="complete">
+          <button type="submit" class="btn">
+            <em class="fa fa-square fa-2x m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Mark as complete"></em>
+          </button>
+          <% } else { %>
+          <input type="hidden" name="status" value="todo">
+          <button type="submit" class="btn">
+            <em class="fa fa-check-square fa-2x m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Mark as to do"></em>
+          </button>
+          <% } %>
+        </form>
+        </h2>
+      </div>
+      <div class="col px-1 m-1 d-flex align-items-center">
+        <input type="text" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="<%= task.task %>" title="<%= task.task %>" />
+        <input type="text" class="form-control form-control-lg border-0 edit-todo-input rounded px-3 d-none" value="<%= task.task %>" />
+      </div>
+        <div class="col-auto m-1 p-0 todo-actions">
+          <div class="row d-flex align-items-center justify-content-end">
+            <h5 class="m-0 p-0 px-2">
+            <form method="POST" action="/tasks/delete">
+              <input type="hidden" name="id" value="<%= task.id %>">
+              <button type="submit" class="btn">
+                <em class="fa fa-trash-alt fa-2x m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Delete to do"></em>
+              </button> 
+            </form>
+            </h5>
+          </div>
+        </div>
+    </div>
+  <% } %>
+</div>
+
+<script>
+window.onload = function () {
+  $('[data-toggle="tooltip"]').tooltip();
+};
+
+</script>
