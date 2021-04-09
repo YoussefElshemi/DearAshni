@@ -33,7 +33,8 @@ router.post('/new', ensureAuthenticated, (req, res) => {
           id: event._id,
           start: event.start,
           end: event.end,
-          title: event.title
+          title: event.title,
+          allDay: event.allDay
         }
 
         res.status(200).json({ message: 'Successfully added event to your calendar', event: eventJSON });
